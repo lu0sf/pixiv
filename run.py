@@ -51,7 +51,7 @@ def select(id):
     res = requests.get(url=r, headers={'Referer': r,
                                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4210.0 Safari/537.36 Edg/86.0.594.1',
                                        'Cookie': config.cookie},
-                       verify=False)
+                       verify=False,stream=True)
     a = res.text.strip('*').strip('+').strip('/').strip('-')
     equates = ''',"bookmarkCount":(.*?),"likeCount":5289,'''
     data = re.findall(a, equates)
@@ -72,7 +72,7 @@ def index(m, c, d, p):
                                headers={'Referer': 'https://www.pixiv.net/ranking.php?mode=daily&content=illust}',
                                         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4210.0 Safari/537.36 Edg/86.0.594.1',
                                         'Cookie': config.cookie},
-                               verify=False)
+                               verify=False,stream=True)
             try:
                 data = res.json()['contents']
             except KeyError:
@@ -101,7 +101,7 @@ def save(i, o):
         res = requests.get(url=i[1], headers={'Referer': 'https://www.pixiv.net/ranking.php?mode=daily&content=illust}',
                                               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4210.0 Safari/537.36 Edg/86.0.594.1',
                                               'Cookie': config.cookie},
-                           verify=False, timeout=5)
+                           verify=False, timeout=5,stream=True)
         data = res.content
         if res.status_code == 200:
             with open(path, 'wb+') as f:
